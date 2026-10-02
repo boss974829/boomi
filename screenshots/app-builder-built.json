@@ -1,0 +1,41 @@
+{
+  "url": "http://127.0.0.1:8081/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Bhoomi — 3D India",
+      "hasCanvas": false,
+      "bodyTextLen": 1179,
+      "bodyTextHash": "083622af87e05009b9f1de175830a6f2dd20af18304703c7a78cbe5031420466",
+      "bodyTextPrefix": "FIELD ATLAS · INDIA Bhoomi Live satellite draped on a real eleva",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Bhoomi — 3D India",
+      "hasCanvas": false,
+      "bodyTextLen": 597,
+      "bodyTextHash": "93df3e3aa98a7fbe3c5a903ac6ab0e19701345223d07d21305417af79338d0a2",
+      "bodyTextPrefix": "FIELD ATLAS Bhoomi Satellite Relief Physical ELEVATION MESH Drap",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-built.json",
+  "divergesFromBaseline": true,
+  "baselineReasons": [
+    "desktop: canvas disappeared",
+    "mobile: canvas disappeared"
+  ]
+}

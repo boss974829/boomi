@@ -1,0 +1,232 @@
+export type Place = {
+  id: string;
+  name: string;
+  region: string;
+  lng: number;
+  lat: number;
+  zoom: number;
+  pitch: number;
+  bearing: number;
+  kind: string;
+  surveyed: string;
+  text: string;
+};
+
+export const PLACES: Place[] = [
+  {
+    id: "land",
+    name: "The subcontinent",
+    region: "India",
+    lng: 79.05,
+    lat: 22.55,
+    zoom: 4.32,
+    pitch: 50,
+    bearing: -14,
+    kind: "Overview",
+    surveyed: "Sea floor to 8,586 m",
+    text: "A peninsula pinned under the Himalaya. The north is a wall of rock, the interior a tilted plateau, the coasts a thin plain.",
+  },
+  {
+    id: "kangchenjunga",
+    name: "Kangchenjunga",
+    region: "Sikkim",
+    lng: 88.147,
+    lat: 27.62,
+    zoom: 9.4,
+    pitch: 62,
+    bearing: -18,
+    kind: "Summit",
+    surveyed: "8,586 m",
+    text: "Highest summit of India, on the Sikkim–Nepal border. Five ridges fall off the massif into ice, then forest.",
+  },
+  {
+    id: "nanda",
+    name: "Nanda Devi",
+    region: "Uttarakhand",
+    lng: 79.97,
+    lat: 30.28,
+    zoom: 9.6,
+    pitch: 62,
+    bearing: 12,
+    kind: "Summit",
+    surveyed: "7,816 m",
+    text: "The highest peak standing entirely inside India. A ring of walls closes the Garhwal sanctuary around it.",
+  },
+  {
+    id: "ladakh",
+    name: "Ladakh",
+    region: "High desert",
+    lng: 77.9,
+    lat: 34.05,
+    zoom: 7.7,
+    pitch: 58,
+    bearing: -24,
+    kind: "Plateau",
+    surveyed: "Valley floors near 3,000 m",
+    text: "Cold desert between the Ladakh and Zanskar ranges. The Indus cuts a trench through ground that stays above the tree line.",
+  },
+  {
+    id: "kashmir",
+    name: "Kashmir Valley",
+    region: "Pir Panjal",
+    lng: 74.78,
+    lat: 33.95,
+    zoom: 8.8,
+    pitch: 58,
+    bearing: 8,
+    kind: "Basin",
+    surveyed: "Floor near 1,600 m",
+    text: "An almond-shaped basin. The Pir Panjal holds the monsoon; the Great Himalaya rises on the far side.",
+  },
+  {
+    id: "ganga",
+    name: "Ganga plain",
+    region: "Indo-Gangetic",
+    lng: 82.2,
+    lat: 26.15,
+    zoom: 6.15,
+    pitch: 46,
+    bearing: -8,
+    kind: "Alluvium",
+    surveyed: "Mostly under 200 m",
+    text: "Silt from the Ganga and its tributaries, almost no relief. The land only steepens where the Siwalik hills begin.",
+  },
+  {
+    id: "thar",
+    name: "Thar desert",
+    region: "Rajasthan",
+    lng: 71.15,
+    lat: 26.85,
+    zoom: 6.9,
+    pitch: 54,
+    bearing: 16,
+    kind: "Desert",
+    surveyed: "Dunes, tens to hundreds of metres",
+    text: "Dunes and salt playas on a hard floor. The Aravalli keeps most of the monsoon on the range’s eastern side.",
+  },
+  {
+    id: "rann",
+    name: "Rann of Kutch",
+    region: "Gujarat",
+    lng: 70.15,
+    lat: 23.85,
+    zoom: 7.5,
+    pitch: 54,
+    bearing: -12,
+    kind: "Salt flat",
+    surveyed: "A few metres above the sea",
+    text: "A seasonal salt marsh. It floods in the monsoon and bakes white after. The relief is almost entirely the tide.",
+  },
+  {
+    id: "aravalli",
+    name: "Aravalli",
+    region: "Rajasthan",
+    lng: 73.85,
+    lat: 25.15,
+    zoom: 7.3,
+    pitch: 56,
+    bearing: 18,
+    kind: "Ancient range",
+    surveyed: "Guru Shikhar 1,722 m",
+    text: "A worn fold belt, among the oldest mountains on Earth. What remains is a ridge, not a wall.",
+  },
+  {
+    id: "deccan",
+    name: "Deccan Traps",
+    region: "Peninsular plateau",
+    lng: 76.4,
+    lat: 18.4,
+    zoom: 6.35,
+    pitch: 50,
+    bearing: -18,
+    kind: "Volcanic plateau",
+    surveyed: "Mostly 400–800 m",
+    text: "Stacked flood basalt, then tilted. The west stands higher; rivers drain east across the traps toward the Bay of Bengal.",
+  },
+  {
+    id: "ghats",
+    name: "Western Ghats",
+    region: "Arabian escarpment",
+    lng: 75.15,
+    lat: 13.55,
+    zoom: 7.55,
+    pitch: 60,
+    bearing: -28,
+    kind: "Escarpment",
+    surveyed: "Crest often above 1,000 m",
+    text: "A scarp facing the Arabian Sea. The monsoon dumps on the windward face. The plateau behind it is drier.",
+  },
+  {
+    id: "anamudi",
+    name: "Anamudi",
+    region: "Anaimalai hills",
+    lng: 77.06,
+    lat: 10.12,
+    zoom: 10.1,
+    pitch: 62,
+    bearing: 20,
+    kind: "Summit",
+    surveyed: "2,695 m",
+    text: "Highest ground in peninsular India. The Anaimalai, Cardamom and Palni hills meet around this peak.",
+  },
+  {
+    id: "sundarbans",
+    name: "Sundarbans",
+    region: "Ganga–Brahmaputra delta",
+    lng: 88.9,
+    lat: 21.95,
+    zoom: 8.5,
+    pitch: 50,
+    bearing: -20,
+    kind: "Delta",
+    surveyed: "Barely above the tide",
+    text: "Mangrove on new silt. Height barely changes. The pattern is the creeks, not the elevation.",
+  },
+  {
+    id: "brahmaputra",
+    name: "Brahmaputra valley",
+    region: "Assam",
+    lng: 92.9,
+    lat: 26.55,
+    zoom: 6.85,
+    pitch: 54,
+    bearing: 22,
+    kind: "Braided river",
+    surveyed: "Valley near 50–100 m",
+    text: "The river leaves the mountains and braids across Assam. The Meghalaya plateau rises abruptly to the south.",
+  },
+  {
+    id: "andaman",
+    name: "Andaman ridge",
+    region: "Bay of Bengal",
+    lng: 92.85,
+    lat: 12.15,
+    zoom: 7.15,
+    pitch: 55,
+    bearing: -16,
+    kind: "Island arc",
+    surveyed: "Peaks above 700 m",
+    text: "The tops of a submerged chain, where the Indian plate meets the Burma plate. The sea around them is deep.",
+  },
+];
+
+export type Peak = {
+  name: string;
+  lng: number;
+  lat: number;
+  rank: 1 | 2;
+};
+
+export const PEAKS: Peak[] = [
+  { name: "Kangchenjunga", lng: 88.1475, lat: 27.7025, rank: 1 },
+  { name: "Nanda Devi", lng: 79.9708, lat: 30.3768, rank: 1 },
+  { name: "Anamudi", lng: 77.0614, lat: 10.1698, rank: 1 },
+  { name: "Kamet", lng: 79.7747, lat: 30.9198, rank: 2 },
+  { name: "Doddabetta", lng: 76.733, lat: 11.4, rank: 2 },
+  { name: "Guru Shikhar", lng: 72.706, lat: 24.632, rank: 2 },
+  { name: "Kalsubai", lng: 73.795, lat: 19.601, rank: 2 },
+];
+
+export function findPlace(id: string): Place {
+  return PLACES.find((place) => place.id === id) ?? PLACES[0];
+}

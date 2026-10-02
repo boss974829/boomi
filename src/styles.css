@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+
+  --color-ink: #0c1210;
+  --color-panel: #141c19;
+  --color-line: #2a3832;
+  --color-mist: #e7efe9;
+  --color-sage: #8fa397;
+  --color-saffron: #e4b15a;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-ink);
+    color: var(--color-mist);
+    font-family: var(--font-sans);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  button:focus-visible,
+  input:focus-visible {
+    outline: 2px solid var(--color-saffron);
+    outline-offset: 2px;
+  }
+
+  h1,
+  h2 {
+    text-wrap: balance;
+  }
+}
+
+.relief-slider {
+  min-height: 2.75rem;
+  accent-color: var(--color-saffron);
+  cursor: pointer;
+}
+
+.maplibregl-ctrl-logo {
+  margin: 0 0 8px 8px !important;
+}
+
+.maplibregl-canvas:focus-visible {
+  outline: 2px solid var(--color-saffron);
+  outline-offset: -2px;
+}
+
+.maplibregl-map {
+  font-family: var(--font-sans);
+}
+
+.atlas-map.maplibregl-map {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .relief-slider {
+    scroll-behavior: auto;
+  }
+}

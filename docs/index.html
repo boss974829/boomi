@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bhoomi</title>
+  <meta name="description" content="Full-HD 3D topographic map of India.">
+  <style>
+    :root { --ink: #1a1612; --paper: #f4efe6; --saffron: #d86a2a; --muted: #c9b8a4; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--ink); color: var(--paper); font-family: Georgia, "Times New Roman", serif; }
+    main { max-width: 880px; margin: 0 auto; padding: 48px 20px 80px; }
+    .kicker { margin: 0; letter-spacing: 0.22em; text-transform: uppercase; font-family: system-ui, sans-serif; font-size: 12px; color: var(--muted); }
+    h1 { font-weight: 500; font-size: clamp(52px, 9vw, 88px); line-height: 0.9; margin: 10px 0 0; letter-spacing: -0.03em; }
+    h1 span { color: var(--saffron); }
+    .lead { font-size: 20px; max-width: 34rem; line-height: 1.45; color: #efe6da; }
+    .btn { display: inline-block; margin: 4px 10px 4px 0; background: var(--saffron); color: var(--ink); text-decoration: none; font-family: system-ui, sans-serif; font-weight: 650; padding: 12px 18px; border-radius: 999px; }
+    .btn.ghost { background: transparent; color: var(--paper); border: 1px solid #5c5146; }
+    figure { margin: 32px 0 8px; }
+    img { width: 100%; border-radius: 16px; display: block; }
+    figcaption, h2, pre, .note { font-family: system-ui, sans-serif; }
+    figcaption, .note { font-size: 13px; color: var(--muted); }
+    h2 { font-weight: 600; font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase; margin: 36px 0 12px; }
+    pre { background: #241f1a; padding: 16px; border-radius: 12px; overflow: auto; font-size: 14px; line-height: 1.5; }
+    a { color: #f0c9a0; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="kicker">Field atlas · India</p>
+    <h1>Bh<span>oo</span>mi</h1>
+    <p class="lead">A full-HD 3D topographic map of India. Satellite ground, real elevation, and the high places named.</p>
+    <p>
+      <a class="btn" href="https://github.com/boss974829/boomi">Open on GitHub</a>
+      <a class="btn ghost" href="https://github.com/boss974829/boomi#run-the-map">How to run</a>
+    </p>
+    <figure>
+      <img src="https://raw.githubusercontent.com/boss974829/boomi/main/screenshots/globe.png" alt="India shown on a 3D globe">
+      <figcaption>Globe view from the atlas.</figcaption>
+    </figure>
+    <h2>Run the map</h2>
+    <pre>git clone https://github.com/boss974829/boomi.git
+cd boomi
+npm install
+npm run dev</pre>
+    <p class="note">Then open <a href="http://localhost:8080">http://localhost:8080</a>. The interactive map runs on your machine. This page is the public opening link.</p>
+  </main>
+</body>
+</html>

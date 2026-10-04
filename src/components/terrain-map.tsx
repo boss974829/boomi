@@ -287,7 +287,7 @@ export function TerrainMap() {
         bearing: initial.bearing,
         maxPitch: 70,
         minZoom: 2.6,
-        maxZoom: 14,
+        maxZoom: 17,
         attributionControl: false,
         maplibreLogo: true,
         logoPosition: "bottom-left",

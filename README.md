@@ -2,7 +2,7 @@
 
 Full-HD 3D topographic map of India.
 
-**Open:** https://github.com/boss974829/boomi
+**Open the map:** https://boss974829.github.io/bhoomi/
 
 ![India on the globe](screenshots/globe.png)
 

@@ -1,49 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bhoomi</title>
-  <meta name="description" content="Full-HD 3D topographic map of India.">
+  <meta name="description" content="Full-HD 3D topographic map of India." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230c1210'/%3E%3Cpath d='M4 22 L12 10 L18 18 L24 8 L28 22 Z' fill='none' stroke='%23e4b15a' stroke-width='1.6'/%3E%3C/svg%3E" />
+  <link href="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.css" rel="stylesheet" />
   <style>
-    :root { --ink: #1a1612; --paper: #f4efe6; --saffron: #d86a2a; --muted: #c9b8a4; }
-    * { box-sizing: border-box; }
-    body { margin: 0; background: var(--ink); color: var(--paper); font-family: Georgia, "Times New Roman", serif; }
-    main { max-width: 880px; margin: 0 auto; padding: 48px 20px 80px; }
-    .kicker { margin: 0; letter-spacing: 0.22em; text-transform: uppercase; font-family: system-ui, sans-serif; font-size: 12px; color: var(--muted); }
-    h1 { font-weight: 500; font-size: clamp(52px, 9vw, 88px); line-height: 0.9; margin: 10px 0 0; letter-spacing: -0.03em; }
-    h1 span { color: var(--saffron); }
-    .lead { font-size: 20px; max-width: 34rem; line-height: 1.45; color: #efe6da; }
-    .btn { display: inline-block; margin: 4px 10px 4px 0; background: var(--saffron); color: var(--ink); text-decoration: none; font-family: system-ui, sans-serif; font-weight: 650; padding: 12px 18px; border-radius: 999px; }
-    .btn.ghost { background: transparent; color: var(--paper); border: 1px solid #5c5146; }
-    figure { margin: 32px 0 8px; }
-    img { width: 100%; border-radius: 16px; display: block; }
-    figcaption, h2, pre, .note { font-family: system-ui, sans-serif; }
-    figcaption, .note { font-size: 13px; color: var(--muted); }
-    h2 { font-weight: 600; font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase; margin: 36px 0 12px; }
-    pre { background: #241f1a; padding: 16px; border-radius: 12px; overflow: auto; font-size: 14px; line-height: 1.5; }
-    a { color: #f0c9a0; }
+    html, body, #map { margin: 0; height: 100%; background: #0c1210; }
+    body { color: #f4efe6; font-family: system-ui, sans-serif; }
+    .maplibregl-ctrl-attrib { font-size: 10px; }
+    .panel {
+      position: absolute; z-index: 2; top: 14px; left: 14px; right: 14px;
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start;
+      pointer-events: none;
+    }
+    .card, .places button, .slider, .readout {
+      pointer-events: auto;
+      background: rgba(12, 18, 16, 0.82);
+      border: 1px solid rgba(228, 177, 90, 0.35);
+      backdrop-filter: blur(8px);
+    }
+    .card { padding: 12px 14px; max-width: 280px; }
+    .kicker { margin: 0; letter-spacing: 0.18em; text-transform: uppercase; font-size: 11px; color: #c9b8a4; }
+    h1 { margin: 2px 0 0; font-family: Georgia, serif; font-weight: 500; font-size: 32px; letter-spacing: -0.03em; }
+    h1 span { color: #d86a2a; }
+    .card p { margin: 6px 0 0; font-size: 13px; line-height: 1.4; color: #efe6da; }
+    .places { display: flex; flex-wrap: wrap; gap: 6px; max-width: 640px; }
+    .places button, .slider {
+      color: #f4efe6; border-radius: 999px; padding: 8px 12px; font: 500 13px system-ui, sans-serif; cursor: pointer;
+    }
+    .places button.on { background: #e4b15a; color: #0c1210; border-color: #e4b15a; }
+    .dock {
+      position: absolute; z-index: 2; left: 14px; right: 14px; bottom: 14px;
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    }
+    .slider { display: flex; align-items: center; gap: 10px; padding: 8px 12px; }
+    .slider input { width: 140px; accent-color: #e4b15a; }
+    .readout { margin-left: auto; padding: 8px 12px; border-radius: 999px; font-size: 13px; color: #efe6da; }
+    .status { position: absolute; z-index: 2; left: 14px; bottom: 64px; font-size: 12px; color: #f0c9a0; }
   </style>
 </head>
 <body>
-  <main>
-    <p class="kicker">Field atlas · India</p>
-    <h1>Bh<span>oo</span>mi</h1>
-    <p class="lead">A full-HD 3D topographic map of India. Satellite ground, real elevation, and the high places named.</p>
-    <p>
-      <a class="btn" href="https://github.com/boss974829/boomi">Open on GitHub</a>
-      <a class="btn ghost" href="https://github.com/boss974829/boomi#run-the-map">How to run</a>
-    </p>
-    <figure>
-      <img src="https://raw.githubusercontent.com/boss974829/boomi/main/screenshots/globe.png" alt="India shown on a 3D globe">
-      <figcaption>Globe view from the atlas.</figcaption>
-    </figure>
-    <h2>Run the map</h2>
-    <pre>git clone https://github.com/boss974829/boomi.git
-cd boomi
-npm install
-npm run dev</pre>
-    <p class="note">Then open <a href="http://localhost:8080">http://localhost:8080</a>. The interactive map runs on your machine. This page is the public opening link.</p>
-  </main>
+  <div id="map"></div>
+  <div class="panel">
+    <div class="card">
+      <p class="kicker">Field atlas · India</p>
+      <h1>Bh<span>oo</span>mi</h1>
+      <p id="blurb">A peninsula pinned under the Himalaya. The north is a wall of rock, the interior a tilted plateau, the coasts a thin plain.</p>
+    </div>
+    <div class="places" id="places"></div>
+  </div>
+  <div class="dock">
+    <label class="slider">Relief
+      <input id="exag" type="range" min="1" max="6" step="0.1" value="2.4" />
+      <span id="exag-label">2.4×</span>
+    </label>
+    <div class="readout" id="elev">Elevation —</div>
+  </div>
+  <p class="status" id="status" hidden></p>
+  <script src="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.js"></script>
+  <script>
+    const PLACES = [
+      { id: "land", name: "The subcontinent", lng: 79.05, lat: 22.55, zoom: 4.32, pitch: 50, bearing: -14, text: "A peninsula pinned under the Himalaya. The north is a wall of rock, the interior a tilted plateau, the coasts a thin plain." },
+      { id: "kangchenjunga", name: "Kangchenjunga", lng: 88.147, lat: 27.62, zoom: 9.4, pitch: 62, bearing: -18, text: "Highest summit of India, on the Sikkim–Nepal border. Five ridges fall off the massif into ice, then forest." },
+      { id: "nanda", name: "Nanda Devi", lng: 79.97, lat: 30.28, zoom: 9.6, pitch: 62, bearing: 12, text: "The highest peak standing entirely inside India. A ring of walls closes the Garhwal sanctuary around it." },
+      { id: "ladakh", name: "Ladakh", lng: 77.9, lat: 34.05, zoom: 7.7, pitch: 58, bearing: -24, text: "Cold desert between the Ladakh and Zanskar ranges. The Indus cuts a trench through ground that stays above the tree line." },
+      { id: "ghats", name: "Western Ghats", lng: 75.15, lat: 13.55, zoom: 7.55, pitch: 60, bearing: -28, text: "A scarp facing the Arabian Sea. The monsoon dumps on the windward face. The plateau behind it is drier." },
+      { id: "deccan", name: "Deccan", lng: 76.4, lat: 18.4, zoom: 6.35, pitch: 50, bearing: -18, text: "Stacked flood basalt, then tilted. The west stands higher; rivers drain east across the traps toward the Bay of Bengal." },
+      { id: "thar", name: "Thar", lng: 71.15, lat: 26.85, zoom: 6.9, pitch: 54, bearing: 16, text: "Dunes and salt playas on a hard floor. The Aravalli keeps most of the monsoon on the range’s eastern side." },
+      { id: "sundarbans", name: "Sundarbans", lng: 88.9, lat: 21.95, zoom: 8.5, pitch: 50, bearing: -20, text: "Mangrove on new silt. Height barely changes. The pattern is the creeks, not the elevation." }
+    ];
+    const PEAKS = [
+      ["Kangchenjunga", 88.1475, 27.7025],
+      ["Nanda Devi", 79.9708, 30.3768],
+      ["Anamudi", 77.0614, 10.1698]
+    ];
+    const DEM = "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png";
+    const SAT = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
+    const LABELS = "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}";
+    const STATES = "https://raw.githubusercontent.com/boss974829/boomi/main/public/india-states.geojson";
+
+    const start = PLACES[0];
+    const map = new maplibregl.Map({
+      container: "map",
+      style: {
+        version: 8,
+        glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+        projection: { type: "globe" },
+        sky: { "sky-color": "#8eb4c8", "horizon-color": "#e6efe8", "sky-horizon-blend": 0.72, "fog-color": "#c9d6d0", "atmosphere-blend": 0.4 },
+        light: { anchor: "map", position: [1.4, 200, 32], color: "#fff3e4", intensity: 0.58 },
+        terrain: { source: "dem", exaggeration: 2.4 },
+        sources: {
+          dem: { type: "raster-dem", tiles: [DEM], encoding: "terrarium", tileSize: 256, maxzoom: 15 },
+          shade: { type: "raster-dem", tiles: [DEM], encoding: "terrarium", tileSize: 256, maxzoom: 15 },
+          satellite: { type: "raster", tiles: [SAT], tileSize: 256, maxzoom: 18, attribution: "Imagery: Esri, Maxar, Earthstar Geographics · Elevation: AWS Terrain Tiles" },
+          labels: { type: "raster", tiles: [LABELS], tileSize: 256, maxzoom: 19 },
+          states: { type: "geojson", data: { type: "FeatureCollection", features: [] } },
+          peaks: {
+            type: "geojson",
+            data: { type: "FeatureCollection", features: PEAKS.map(([name, lng, lat]) => ({ type: "Feature", properties: { name }, geometry: { type: "Point", coordinates: [lng, lat] } })) }
+          }
+        },
+        layers: [
+          { id: "bg", type: "background", paint: { "background-color": "#0c1210" } },
+          { id: "satellite", type: "raster", source: "satellite", paint: { "raster-saturation": 0.06, "raster-contrast": 0.06 } },
+          { id: "hillshade", type: "hillshade", source: "shade", paint: { "hillshade-illumination-direction": 200, "hillshade-exaggeration": 0.18, "hillshade-shadow-color": "#14110e", "hillshade-highlight-color": "#f4efe4" } },
+          { id: "labels", type: "raster", source: "labels" },
+          { id: "states-line", type: "line", source: "states", paint: { "line-color": "#e4b15a", "line-width": 1, "line-opacity": 0.75 } },
+          { id: "peaks", type: "symbol", source: "peaks", minzoom: 5.2, layout: { "text-field": ["get", "name"], "text-font": ["Noto Sans Regular"], "text-size": 13, "text-offset": [0, 0.6] }, paint: { "text-color": "#f4efe6", "text-halo-color": "#0c1210", "text-halo-width": 1.2 } }
+        ]
+      },
+      center: [start.lng, start.lat],
+      zoom: start.zoom,
+      pitch: start.pitch,
+      bearing: start.bearing,
+      maxPitch: 75,
+      attributionControl: true
+    });
+    map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), "top-right");
+
+    const placesEl = document.getElementById("places");
+    const blurb = document.getElementById("blurb");
+    const statusEl = document.getElementById("status");
+    let current = start.id;
+    function drawPlaces() {
+      placesEl.innerHTML = PLACES.map((place) => `<button type="button" data-id="${place.id}" class="${place.id === current ? "on" : ""}">${place.name}</button>`).join("");
+    }
+    placesEl.addEventListener("click", (event) => {
+      const button = event.target.closest("button");
+      if (!button) return;
+      const place = PLACES.find((item) => item.id === button.dataset.id);
+      current = place.id;
+      blurb.textContent = place.text;
+      drawPlaces();
+      map.flyTo({ center: [place.lng, place.lat], zoom: place.zoom, pitch: place.pitch, bearing: place.bearing, duration: 1800 });
+    });
+    drawPlaces();
+
+    const exag = document.getElementById("exag");
+    const exagLabel = document.getElementById("exag-label");
+    exag.addEventListener("input", () => {
+      const value = Number(exag.value);
+      exagLabel.textContent = value.toFixed(1) + "×";
+      map.setTerrain({ source: "dem", exaggeration: value });
+    });
+
+    const elev = document.getElementById("elev");
+    map.on("mousemove", (event) => {
+      const meters = map.queryTerrainElevation(event.lngLat);
+      elev.textContent = meters == null ? "Elevation —" : `Elevation ${Math.round(meters).toLocaleString()} m`;
+    });
+    map.on("load", () => {
+      fetch(STATES)
+        .then((res) => { if (!res.ok) throw new Error(String(res.status)); return res.json(); })
+        .then((data) => map.getSource("states").setData(data))
+        .catch(() => { statusEl.hidden = false; statusEl.textContent = "State borders did not load. The terrain is still live."; });
+    });
+    map.on("error", (event) => {
+      if (statusEl.hidden && event && event.error) {
+        statusEl.hidden = false;
+        statusEl.textContent = "The map hit a tile error. Drag once, or reload.";
+      }
+    });
+  </script>
 </body>
 </html>

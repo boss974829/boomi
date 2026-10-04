@@ -1,3 +1,13 @@
+<p align="center">
+  <a href="https://boss974829.github.io/bhoomi/">
+    <img src="https://boss974829.github.io/readme/boomi.gif" width="100%" alt="Bhoomi" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://boss974829.github.io/bhoomi/"><strong>Open the map →</strong></a>
+</p>
+
 # Bhoomi
 
 Full-HD 3D topographic map of India.

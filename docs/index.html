@@ -64,14 +64,14 @@
   <script src="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.js"></script>
   <script>
     const PLACES = [
-      { id: "land", name: "The subcontinent", lng: 78.9, lat: 22.6, zoom: 5, pitch: 30, bearing: -8, text: "A peninsula pinned under the Himalaya. The north is a wall of rock, the interior a tilted plateau, the coasts a thin plain." },
-      { id: "kangchenjunga", name: "Kangchenjunga", lng: 88.1475, lat: 27.7025, zoom: 13, pitch: 58, bearing: -24, text: "Surveyed summit 8,586 m, at 27.7025°N 88.1475°E on the Sikkim–Nepal border." },
-      { id: "nanda", name: "Nanda Devi", lng: 79.9708, lat: 30.3768, zoom: 13, pitch: 60, bearing: 16, text: "Surveyed summit 7,816 m, at 30.3768°N 79.9708°E. The highest peak standing entirely inside India." },
-      { id: "ladakh", name: "Ladakh", lng: 77.577, lat: 34.164, zoom: 10, pitch: 52, bearing: -20, text: "The Indus valley at Leh, between the Ladakh and Zanskar ranges. Valley floors sit near 3,500 m." },
-      { id: "ghats", name: "Western Ghats", lng: 75.28, lat: 13.35, zoom: 11, pitch: 55, bearing: -32, text: "The Arabian escarpment near Kudremukh. The crest faces the sea; the plateau behind it is drier." },
-      { id: "deccan", name: "Deccan", lng: 76.4, lat: 18.52, zoom: 8, pitch: 40, bearing: -10, text: "Flood basalt, tilted. The west stands higher; rivers drain east toward the Bay of Bengal." },
-      { id: "thar", name: "Thar", lng: 71.0, lat: 26.9, zoom: 9, pitch: 42, bearing: 14, text: "Dunes and salt playas west of the Aravalli. The range holds most of the monsoon on its eastern side." },
-      { id: "sundarbans", name: "Sundarbans", lng: 88.8, lat: 21.95, zoom: 11, pitch: 35, bearing: -12, text: "Mangrove creeks of the Ganga–Brahmaputra delta, barely above the tide." }
+      { id: "land", name: "The subcontinent", lng: 79.0, lat: 22.8, zoom: 4.7, pitch: 18, bearing: -8, text: "A peninsula pinned under the Himalaya. The north is a wall of rock, the interior a tilted plateau, the coasts a thin plain." },
+      { id: "kangchenjunga", name: "Kangchenjunga", lng: 88.1475, lat: 27.7025, zoom: 12.2, pitch: 12, bearing: -12, text: "Surveyed summit 8,586 m, at 27.7025°N 88.1475°E on the Sikkim–Nepal border." },
+      { id: "nanda", name: "Nanda Devi", lng: 79.9708, lat: 30.3768, zoom: 12.2, pitch: 12, bearing: 8, text: "Surveyed summit 7,816 m, at 30.3768°N 79.9708°E. The highest peak standing entirely inside India." },
+      { id: "ladakh", name: "Ladakh", lng: 77.577, lat: 34.164, zoom: 9.5, pitch: 22, bearing: -16, text: "The Indus valley at Leh, between the Ladakh and Zanskar ranges. Valley floors sit near 3,500 m." },
+      { id: "ghats", name: "Western Ghats", lng: 75.28, lat: 13.35, zoom: 10.5, pitch: 24, bearing: -24, text: "The Arabian escarpment near Kudremukh. The crest faces the sea; the plateau behind it is drier." },
+      { id: "deccan", name: "Deccan", lng: 76.4, lat: 18.52, zoom: 7.4, pitch: 24, bearing: -8, text: "Flood basalt, tilted. The west stands higher; rivers drain east toward the Bay of Bengal." },
+      { id: "thar", name: "Thar", lng: 71.0, lat: 26.9, zoom: 8.2, pitch: 28, bearing: 10, text: "Dunes and salt playas west of the Aravalli. The range holds most of the monsoon on its eastern side." },
+      { id: "sundarbans", name: "Sundarbans", lng: 88.8, lat: 21.95, zoom: 10.2, pitch: 28, bearing: -10, text: "Mangrove creeks of the Ganga–Brahmaputra delta, barely above the tide." }
     ];
     const PEAKS = [
       ["Kangchenjunga", 88.1475, 27.7025],
@@ -118,7 +118,7 @@
           { id: "satellite", type: "raster", source: "satellite", paint: { "raster-resampling": "linear", "raster-fade-duration": 0, "raster-saturation": 0.05, "raster-contrast": 0.04 } },
           { id: "hillshade", type: "hillshade", source: "shade", paint: { "hillshade-illumination-direction": 210, "hillshade-illumination-altitude": 45, "hillshade-exaggeration": 0.22, "hillshade-shadow-color": "#1a1612", "hillshade-highlight-color": "#fff8ee" } },
           { id: "states-line", type: "line", source: "states", paint: { "line-color": "#e4b15a", "line-width": ["interpolate", ["linear"], ["zoom"], 4, 0.6, 8, 1.1, 12, 1.6], "line-opacity": 0.7 } },
-          { id: "roads", type: "raster", source: "roads", paint: { "raster-opacity": 0.9, "raster-fade-duration": 0 } },
+          { id: "roads", type: "raster", source: "roads", minzoom: 8, paint: { "raster-opacity": 0.85, "raster-fade-duration": 0 } },
           { id: "labels", type: "raster", source: "labels", paint: { "raster-fade-duration": 0 } },
           { id: "peaks", type: "circle", source: "peaks", paint: { "circle-radius": 3.5, "circle-color": "#e4b15a", "circle-stroke-width": 1, "circle-stroke-color": "#0c1210" } },
           { id: "peak-names", type: "symbol", source: "peaks", minzoom: 8, layout: { "text-field": ["get", "name"], "text-font": ["Noto Sans Regular"], "text-size": 13, "text-offset": [0, 0.8], "text-anchor": "top" }, paint: { "text-color": "#f4efe6", "text-halo-color": "#0c1210", "text-halo-width": 1.4 } }

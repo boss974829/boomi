@@ -22,56 +22,72 @@
       border: 1px solid rgba(228, 177, 90, 0.35);
       backdrop-filter: blur(8px);
     }
-    .card { padding: 12px 14px; max-width: 280px; }
-    .kicker { margin: 0; letter-spacing: 0.18em; text-transform: uppercase; font-size: 11px; color: #c9b8a4; }
-    h1 { margin: 2px 0 0; font-family: Georgia, serif; font-weight: 500; font-size: 32px; letter-spacing: -0.03em; }
+    .card { padding: 12px 14px; max-width: 260px; animation: card-in 560ms ease both; }
+    .kicker { margin: 0; letter-spacing: 0.16em; text-transform: uppercase; font-size: 11px; color: #e4b15a; }
+    h1 { margin: 2px 0 0; font-family: Georgia, serif; font-weight: 500; font-size: 30px; letter-spacing: -0.03em; }
     h1 span { color: #d86a2a; }
-    .card p { margin: 6px 0 0; font-size: 13px; line-height: 1.4; color: #efe6da; }
+    .card p { margin: 8px 0 0; font-size: 14px; line-height: 1.35; color: #f4efe6; }
+    .fact { display: inline-block; margin-top: 10px !important; padding: 4px 8px; border-radius: 999px; background: rgba(228, 177, 90, 0.16); color: #e4b15a !important; font-size: 12px !important; letter-spacing: 0.04em; }
+    .swap { animation: rise 420ms ease; }
     .places { display: flex; flex-wrap: wrap; gap: 6px; max-width: 720px; }
     .places button, .slider, .proj {
       color: #f4efe6; border-radius: 999px; padding: 8px 12px; font: 500 13px system-ui, sans-serif; cursor: pointer;
+      transition: background 180ms ease, color 180ms ease, transform 150ms ease, border-color 180ms ease;
     }
+    .places button:hover { border-color: #e4b15a; }
+    .places button:active, .proj:active { transform: scale(0.96); }
     .places button.on, .proj.on { background: #e4b15a; color: #0c1210; border-color: #e4b15a; }
     .dock {
       position: absolute; z-index: 2; left: 14px; right: 14px; bottom: 28px;
       display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+      animation: dock-in 700ms ease both;
     }
     .slider { display: flex; align-items: center; gap: 10px; }
-    .slider input { width: 140px; accent-color: #e4b15a; }
+    .slider input { width: 120px; accent-color: #e4b15a; }
     .readout { margin-left: auto; padding: 8px 12px; border-radius: 999px; font-size: 13px; color: #efe6da; }
+    .readout b { font-weight: 600; color: #f4efe6; }
+    .readout.tick b { animation: pop 280ms ease; }
     .status { position: absolute; z-index: 2; left: 14px; bottom: 78px; font-size: 12px; color: #f0c9a0; }
+    @keyframes card-in { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+    @keyframes dock-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    @keyframes pop { from { opacity: 0.4; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      .card, .dock, .swap, .readout.tick b, .places button, .proj { animation: none; transition: none; }
+    }
   </style>
 </head>
 <body>
   <div id="map"></div>
   <div class="panel">
-    <div class="card">
-      <p class="kicker">Field atlas · India</p>
-      <h1>Bh<span>oo</span>mi</h1>
-      <p id="blurb">A peninsula pinned under the Himalaya. The north is a wall of rock, the interior a tilted plateau, the coasts a thin plain.</p>
+    <div class="card" id="card">
+      <p class="kicker" id="kicker">India</p>
+      <h1 id="title">Bh<span>oo</span>mi</h1>
+      <p class="blurb" id="blurb">The whole country, from the Himalaya to the sea.</p>
+      <p class="fact" id="fact">Pick a place</p>
     </div>
     <div class="places" id="places"></div>
   </div>
   <div class="dock">
-    <label class="slider">Relief
-      <input id="exag" type="range" min="1" max="3.5" step="0.1" value="1.4" />
+    <label class="slider">Terrain
+      <input id="exag" type="range" min="1" max="3.5" step="0.1" value="1.4" aria-label="Terrain height" />
       <span id="exag-label">1.4×</span>
     </label>
-    <button class="proj" id="proj" type="button" aria-pressed="false">Globe</button>
-    <div class="readout" id="elev">Elevation —</div>
+    <button class="proj" id="proj" type="button" aria-pressed="false">Globe view</button>
+    <div class="readout" id="elev">Height <b>—</b></div>
   </div>
   <p class="status" id="status" hidden></p>
   <script src="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.js"></script>
   <script>
     const PLACES = [
-      { id: "land", name: "The subcontinent", lng: 79.0, lat: 22.8, zoom: 4.7, pitch: 18, bearing: -8, text: "A peninsula pinned under the Himalaya. The north is a wall of rock, the interior a tilted plateau, the coasts a thin plain." },
-      { id: "kangchenjunga", name: "Kangchenjunga", lng: 88.1475, lat: 27.7025, zoom: 12.2, pitch: 12, bearing: -12, text: "Surveyed summit 8,586 m, at 27.7025°N 88.1475°E on the Sikkim–Nepal border." },
-      { id: "nanda", name: "Nanda Devi", lng: 79.9708, lat: 30.3768, zoom: 12.2, pitch: 12, bearing: 8, text: "Surveyed summit 7,816 m, at 30.3768°N 79.9708°E. The highest peak standing entirely inside India." },
-      { id: "ladakh", name: "Ladakh", lng: 77.577, lat: 34.164, zoom: 9.5, pitch: 22, bearing: -16, text: "The Indus valley at Leh, between the Ladakh and Zanskar ranges. Valley floors sit near 3,500 m." },
-      { id: "ghats", name: "Western Ghats", lng: 75.28, lat: 13.35, zoom: 10.5, pitch: 24, bearing: -24, text: "The Arabian escarpment near Kudremukh. The crest faces the sea; the plateau behind it is drier." },
-      { id: "deccan", name: "Deccan", lng: 76.4, lat: 18.52, zoom: 7.4, pitch: 24, bearing: -8, text: "Flood basalt, tilted. The west stands higher; rivers drain east toward the Bay of Bengal." },
-      { id: "thar", name: "Thar", lng: 71.0, lat: 26.9, zoom: 8.2, pitch: 28, bearing: 10, text: "Dunes and salt playas west of the Aravalli. The range holds most of the monsoon on its eastern side." },
-      { id: "sundarbans", name: "Sundarbans", lng: 88.8, lat: 21.95, zoom: 10.2, pitch: 28, bearing: -10, text: "Mangrove creeks of the Ganga–Brahmaputra delta, barely above the tide." }
+      { id: "land", name: "India", lng: 79.0, lat: 22.8, zoom: 4.7, pitch: 18, bearing: -8, text: "The whole country, from the Himalaya to the sea.", fact: "Pick a place" },
+      { id: "kangchenjunga", name: "Kangchenjunga", lng: 88.1475, lat: 27.7025, zoom: 12.2, pitch: 12, bearing: -12, text: "India’s highest summit, on the Sikkim border.", fact: "8,586 m" },
+      { id: "nanda", name: "Nanda Devi", lng: 79.9708, lat: 30.3768, zoom: 12.2, pitch: 12, bearing: 8, text: "The highest peak that stands fully inside India.", fact: "7,816 m" },
+      { id: "ladakh", name: "Ladakh", lng: 77.577, lat: 34.164, zoom: 9.5, pitch: 22, bearing: -16, text: "High desert around the Indus at Leh.", fact: "About 3,500 m" },
+      { id: "ghats", name: "Western Ghats", lng: 75.28, lat: 13.35, zoom: 10.5, pitch: 24, bearing: -24, text: "A steep green edge above the Arabian Sea.", fact: "Kudremukh" },
+      { id: "deccan", name: "Deccan", lng: 76.4, lat: 18.52, zoom: 7.4, pitch: 24, bearing: -8, text: "A volcanic plateau that tilts toward the east.", fact: "400–800 m" },
+      { id: "thar", name: "Thar", lng: 71.0, lat: 26.9, zoom: 8.2, pitch: 28, bearing: 10, text: "Sand and salt west of the Aravalli.", fact: "Desert" },
+      { id: "sundarbans", name: "Sundarbans", lng: 88.8, lat: 21.95, zoom: 10.2, pitch: 28, bearing: -10, text: "Mangrove creeks where the delta meets the sea.", fact: "Near sea level" }
     ];
     const PEAKS = [
       ["Kangchenjunga", 88.1475, 27.7025],
@@ -134,26 +150,46 @@
 
     const placesEl = document.getElementById("places");
     const blurb = document.getElementById("blurb");
+    const title = document.getElementById("title");
+    const kicker = document.getElementById("kicker");
+    const fact = document.getElementById("fact");
     const statusEl = document.getElementById("status");
     const elev = document.getElementById("elev");
+    const elevValue = elev.querySelector("b");
     let current = start.id;
     let globe = false;
 
     function drawPlaces() {
       placesEl.innerHTML = PLACES.map((place) => `<button type="button" data-id="${place.id}" class="${place.id === current ? "on" : ""}">${place.name}</button>`).join("");
     }
+    function say(place) {
+      kicker.textContent = place.id === "land" ? "India" : "Now viewing";
+      title.innerHTML = place.id === "land" ? "Bh<span>oo</span>mi" : place.name;
+      blurb.textContent = place.text;
+      fact.textContent = place.fact;
+      blurb.classList.remove("swap");
+      fact.classList.remove("swap");
+      void blurb.offsetWidth;
+      blurb.classList.add("swap");
+      fact.classList.add("swap");
+    }
     function showElevation(lngLat) {
       const meters = map.queryTerrainElevation(lngLat);
-      elev.textContent = meters == null ? "Elevation —" : `Elevation ${Math.round(meters).toLocaleString()} m`;
+      const next = meters == null ? "—" : Math.round(meters).toLocaleString() + " m";
+      if (elevValue.textContent === next) return;
+      elevValue.textContent = next;
+      elev.classList.remove("tick");
+      void elev.offsetWidth;
+      elev.classList.add("tick");
     }
     placesEl.addEventListener("click", (event) => {
       const button = event.target.closest("button");
-      if (!button) return;
+      if (!button || button.dataset.id === current) return;
       const place = PLACES.find((item) => item.id === button.dataset.id);
       current = place.id;
-      blurb.textContent = place.text;
+      say(place);
       drawPlaces();
-      map.flyTo({ center: [place.lng, place.lat], zoom: place.zoom, pitch: place.pitch, bearing: place.bearing, duration: 1600, essential: true });
+      map.flyTo({ center: [place.lng, place.lat], zoom: place.zoom, pitch: place.pitch, bearing: place.bearing, duration: 1800, essential: true });
     });
     drawPlaces();
 
@@ -171,7 +207,7 @@
       map.setProjection({ type: globe ? "globe" : "mercator" });
       proj.classList.toggle("on", globe);
       proj.setAttribute("aria-pressed", globe ? "true" : "false");
-      proj.textContent = globe ? "Flat" : "Globe";
+      proj.textContent = globe ? "Flat map" : "Globe view";
     });
 
     map.on("mousemove", (event) => showElevation(event.lngLat));
@@ -180,14 +216,14 @@
       fetch(STATES)
         .then((res) => { if (!res.ok) throw new Error(String(res.status)); return res.json(); })
         .then((data) => map.getSource("states").setData(data))
-        .catch(() => { statusEl.hidden = false; statusEl.textContent = "State borders did not load. The terrain is still live."; });
+        .catch(() => { statusEl.hidden = false; statusEl.textContent = "Borders didn’t load. The land is still here."; });
       showElevation(map.getCenter());
     });
     map.on("error", (event) => {
       const message = event && event.error ? event.error.message : "";
       if (statusEl.hidden && message && !/tile|ajax|image/i.test(message)) {
         statusEl.hidden = false;
-        statusEl.textContent = "The map hit a display error. Reload once.";
+        statusEl.textContent = "The map glitched. Reload once.";
       }
     });
   </script>
